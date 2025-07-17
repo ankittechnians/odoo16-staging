@@ -1,0 +1,26 @@
+{
+    "name": "Project Team",
+    "author": "Technians",
+    'website': 'https://technians.com/odoo',
+    "support": "support@technians.com",
+    "version": "16.0",
+    "category": "Project",
+    "summary": """ Many users can work in single team for a project and can add or remove members from project team """,
+    "description": """ Many users can work in single team for a project and can add or remove members from project team """,
+    "depends": ['base', 'project', 'mail'],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/team_groups.xml",
+        "data/mail_template.xml",
+        "views/ts_project_project.xml",
+        "views/ts_project_team_views.xml",
+        "views/res_config_settings.xml",
+    ],
+    "images": ['static/description/banner.png'],
+    "installable": True,
+    "auto_install": False,
+    "application": True,
+    "license": "OPL-1",
+    "price": 30,
+    "currency": "USD"
+}

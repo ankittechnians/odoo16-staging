@@ -1,0 +1,19 @@
+<odoo>
+    <record id="project_team_category" model="ir.module.category">
+        <field name="name">Project Teams</field>
+        <field name="description">User access levels for Project Teams</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="project_team_user_access" model="res.groups">
+        <field name="name">Project Team User</field>
+        <field name="category_id" ref="project_team_category"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="project_team_manager_access" model="res.groups">
+        <field name="name">Project Team Manager</field>
+        <field name="category_id" ref="project_team_category"/>
+        <field name="implied_ids" eval="[(4, ref('ts_project_teams.project_team_user_access'))]"/>
+    </record>
+</odoo>

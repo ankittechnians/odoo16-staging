@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <!--  Project Team Form View  -->
+        <record id="project_team_form_view" model="ir.ui.view">
+            <field name="name">Project Team Form View</field>
+            <field name="model">project.team</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only" string="Project Team Name"/>
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="account_manager_id" widget="many2one_avatar_user" domain="[('active', 'in', (True, False))]"/>
+                            <field name="project_manager_id" widget="many2one_avatar_user" domain="[('active', 'in', (True, False))]"/>
+                        </group>
+                        <notebook>
+                            <page string="Project Team"  groups="project.group_project_user">
+                                <field name="team_member_ids" widget="many2many" options="{'create_edit':True}"
+                                       domain="[('active', 'in', (True, False))]">
+
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!--  Project Team Tree View  -->
+        <record id="project_team_tree_view" model="ir.ui.view">
+            <field name="name">Project Team tree View</field>
+                <field name="model">project.team</field>
+                <field name="arch" type="xml">
+                    <tree>
+                        <field name="name"/>
+                        <field name="account_manager_id"/>
+                        <field name="project_manager_id"/>
+                        <field name="team_member_ids" widget="many2many_tags"/>
+                    </tree>
+                </field>
+        </record>
+
+        <!--  Project Team Search View  -->
+        <record id="project_team_search_view" model="ir.ui.view">
+            <field name="name">Project Team Search View</field>
+            <field name="model">project.team</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Project Manager Missing" name="missing_pm"
+                            domain="[('project_manager_id', '=', False)]"/>
+                    <filter string="Account Manager Missing" name="missing_am"
+                            domain="[('account_manager_id', '=', False)]"/>
+                    <filter string="Team Members Missing" name="missing_team_members"
+                            domain="[('team_member_ids', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+
+        <!--Add Project Team Menu link under project configuration -->
+        <record id="project_team_action" model="ir.actions.act_window">
+            <field name="name">Project Team</field>
+            <field name="res_model">project.team</field>
+            <field name="view_mode">free,form</field>
+        </record>
+
+        <menuitem id="project_team_menu_id" name="Project Teams" parent='project.menu_main_pm' sequence="8"
+                  action="project_team_action" groups="project.group_project_manager,base.group_system,ts_project_teams.project_team_manager_access"/>
+</odoo>

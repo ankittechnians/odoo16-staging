@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Inheriting project_message_user_assigned template -->
+        <template id="project_message_user_assigned_inherit" inherit_id="project.project_message_user_assigned">
+            <xpath expr="//span[@style='margin-top: 8px;']" position="replace">
+                <span style="margin-top: 8px;">You have been assigned to the <t t-esc="model_description or 'document'"/>
+                    <t t-esc="object.display_name"/> [<t t-esc="object.project_id.name"/>].
+                </span>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!--  Inherit Project Form View  -->
+    <record id="project_form_view_inherit" model="ir.ui.view">
+        <field name="name">project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="account_manager_id"/>
+                <field name="project_team_id" groups="ts_project_teams.project_team_user_access"/>
+            </xpath>
+            <notebook>
+                <page string="Project Team" groups="ts_project_teams.project_team_user_access"
+                      invisible="project_team_id == False">
+                    <field name="team_member_ids" widget="many2many" options="{'create_edit':True}">
+                        <list>
+                            <field name="name"/>
+                        </list>
+
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!--  Project Search View  -->
+    <record id="project_search_view_inherit" model="ir.ui.view">
+         <field name="name">project.search.view.inherit</field>
+         <field name="model">project.project</field>
+         <field name="inherit_id" ref="project.view_project_project_filter"/>
+         <field name="arch" type="xml">
+            <search>
+                <group expand="0" string="Group By">
+                    <filter string="Account Manager" name="group_by_acm"
+                            context="{'group_by': 'account_manager_id'}"/>
+                    <filter string="Team Member" name="group_by_team_member"
+                            context="{'group_by': 'team_member_ids'}"/>
+                    <filter string="Project Team Missing" name="missing_pt"
+                            domain="[('project_team_id', '=', False)]"/>
+                    <filter string="Project Manager Missing" name="missing_pm"
+                            domain="[('user_id', '=', False)]"/>
+                    <filter string="Account Manager Missing" name="missing_am"
+                            domain="[('account_manager_id', '=', False)]"/>
+                </group>
+            </search>
+         </field>
+    </record>
+
+    <!--  Search View For Team Members  -->
+    <record id="project_team_member_search_view_inherit" model="ir.ui.view">
+         <field name="name">project.team.members.search.view.inherit</field>
+         <field name="model">project.project</field>
+         <field name="inherit_id" ref="project.view_project_project_filter"/>
+         <field name="arch" type="xml">
+            <search>
+                <group expand="0" string="Group By">
+                    <filter string="Project Teams" name="group_by_team_users" context="{'group_by': 'team_member_ids'}"/>
+                </group>
+            </search>
+         </field>
+    </record>
+
+    <!--  Project kanban view inherit  -->
+    <record id="project_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">project.kanban.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('o_project_kanban_main')]" position="after">
+                <div class="px-3">
+                    <strong> AM -</strong>
+                    <field name="account_manager_id"/>
+                    <br/>
+                    <strong > PM - </strong>
+                    <field name="user_id"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

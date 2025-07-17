@@ -1,0 +1,41 @@
+<?xml version ="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_task_email_wizard_form" model="ir.ui.view">
+        <field name="name">task.email.wizard.form</field>
+        <field name="model">task.email.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Send Email">
+                <group>
+                    <field name="partner_id"/>
+                    <field name="subject"/>
+                    <field name="body"/>
+                    <field name="template_id"/>
+                    <field name="attachment_ids" widget="many2many_binary"/>
+                </group>
+                <footer>
+                    <button name="send_custom_email" string="Send" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_order_form_email_wizard_button" model="ir.ui.view">
+        <field name="name">sale.order.email.wizard.button</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_quotation_send']" position="after">
+                <button name="open_email_wizard_from_sale"
+                        type="object"
+                        string="Send Custom Email"
+                        class="btn btn-secondary"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+</odoo>
